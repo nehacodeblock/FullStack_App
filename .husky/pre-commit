@@ -1,8 +1,4 @@
-# #!/bin/sh
-# . "$(dirname "$0")/_/husky.sh"
 cd frontend && npx tsc --noEmit 
 cd ..
 npx lint-staged
 
-# echo "pre-commit hook running"
-# exit 1
