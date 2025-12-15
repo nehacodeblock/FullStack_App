@@ -1,0 +1,24 @@
+{
+  "name": "project-fullstack",
+  "version": "1.0.0",
+  "scripts": {
+    "prepare": "husky install",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:backend": "cd backend && npm run lint",
+    "lint": "npm run lint:frontend && npm run lint:backend"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
+  },
+  "lint-staged": {
+    "frontend/**/*.{js,ts,jsx,tsx}": [
+      "cd frontend && eslint --fix",
+      "git add"
+    ],
+    "backend/**/*.{js,ts}": [
+      "cd backend && eslint --fix",
+      "git add"
+    ]
+  }
+}
