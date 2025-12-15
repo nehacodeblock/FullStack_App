@@ -3,5 +3,5 @@
  
 npx lint-staged
 
-echo "pre-commit hook running"
-exit 1
+# echo "pre-commit hook running"
+# exit 1
