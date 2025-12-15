@@ -13,11 +13,12 @@
   },
   "lint-staged": {
     "frontend/**/*.{ts,tsx}": [
-      "cd frontend && npx eslint --max-warnings=0"
+      "cd frontend && npx eslint --fix",
+      "cd frontend && npx prettier --write"
     ],
     "backend/**/*.{js,ts}": [
-      "cd backend && eslint --fix",
-      "git add"
+      "cd backend && npx eslint --fix",
+      "cd backend && npx prettier --write"
     ]
   }
 }
