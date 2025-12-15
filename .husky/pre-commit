@@ -1,4 +1,10 @@
+# type check frontend
 cd frontend && npx tsc --noEmit 
 cd ..
-npx lint-staged
 
+# type check backend
+cd backend && npx tsc --noEmit 
+cd ..
+
+# lint and format staged file
+npx lint-staged
