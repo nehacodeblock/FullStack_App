@@ -12,9 +12,8 @@
     "lint-staged": "^16.2.7"
   },
   "lint-staged": {
-    "frontend/**/*.{js,ts,jsx,tsx}": [
-      "cd frontend && eslint --fix",
-      "git add"
+    "frontend/**/*.{ts,tsx}": [
+      "cd frontend && npx eslint --max-warnings=0"
     ],
     "backend/**/*.{js,ts}": [
       "cd backend && eslint --fix",
