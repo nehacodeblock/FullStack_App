@@ -7,6 +7,6 @@ export interface SignUpPayload {
 }
 
 export const signUpUser = async (data: SignUpPayload) => {
-  const res = await api.post("/auth/signup,data");
+  const res = await api.post("/auth/signup", data);
   return res.data;
 };

@@ -30,7 +30,7 @@ const SignUpPage = () => {
         email: data.email,
         password: data.password,
       });
-      router.replace("pages/login");
+      router.replace("/pages/login");
     } catch (error: any) {
       setServerError(error?.response?.data?.message || "something went wrong");
     } finally {
