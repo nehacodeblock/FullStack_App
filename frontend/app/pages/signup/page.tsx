@@ -2,26 +2,22 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import { schema, SchemaType } from "@/app/schemas/schema";
+import { signupSchema, signupSchemaType } from "@/app/schemas/signupSchema";
 import FormInput from "@/app/components/FormInput";
 import { useState } from "react";
 import { signUpUser } from "@/app/services/authService";
+import Button from "@/app/components/Button";
 
 const SignUpPage = () => {
-  const methods = useForm<SchemaType>({
-    resolver: yupResolver(schema),
+  const methods = useForm<signupSchemaType>({
+    resolver: yupResolver(signupSchema),
   });
-
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
 
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
 
-  const onSubmitData = async (data: SchemaType) => {
+  const onSubmitData = async (data: signupSchemaType) => {
     setLoading(true);
     setServerError("");
     try {
@@ -77,15 +73,9 @@ const SignUpPage = () => {
             name="confirmPassword"
           ></FormInput>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`py-2 mt-4 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
+          <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Signing Up..." : "Sign Up"}
-          </button>
+          </Button>
         </form>
       </FormProvider>
     </div>

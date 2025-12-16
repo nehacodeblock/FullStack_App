@@ -1,7 +1,6 @@
-import React from "react";
 import * as yup from "yup";
 
-export const schema = yup.object({
+export const signupSchema = yup.object({
   name: yup.string().required("Name is required"),
   email: yup
     .string()
@@ -17,4 +16,4 @@ export const schema = yup.object({
     .required("password is required"),
 });
 
-export type SchemaType = yup.InferType<typeof schema>;
+export type signupSchemaType = yup.InferType<typeof signupSchema>;

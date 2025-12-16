@@ -2,23 +2,40 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import { schema, SchemaType } from "@/app/schemas/schema";
+
 import FormInput from "@/app/components/FormInput";
+import Button from "@/app/components/Button";
+import { loginSchema, LoginSchemaType } from "@/app/schemas/loginSchema";
+import { useState } from "react";
+import { loginUser } from "@/app/services/authService";
 
 const Login = () => {
-  const methods = useForm<SchemaType>({
-    resolver: yupResolver(schema),
+  const methods = useForm<LoginSchemaType>({
+    resolver: yupResolver(loginSchema),
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const [serverError, setServerError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
-  const onSubmitData = async (data: SchemaType) => {
+  const onSubmitData = async (data: LoginSchemaType) => {
     console.log("login!!!!");
+    setLoading(true);
+    setServerError("");
+    try {
+      const res = await loginUser({
+        email: data.email,
+        password: data.password,
+      });
+      localStorage.setItem("token", res.accessToken);
+
+      router.push("/pages/dashboard");
+    } catch (error: any) {
+      setServerError(error?.response?.data?.message || "login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,15 +46,15 @@ const Login = () => {
           className="bg-white p-6 rounded-lg w-full max-w-sm  space-y-4"
         >
           <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <FormInput
-              label="Email"
-              inputSize="md"
-              type="email"
-              placeholder="enter email"
-              name="email"
-            ></FormInput>
-          </div>
+          {serverError && (
+            <p className="text-red-500 text-sm text-center">{serverError}</p>
+          )}
+          <FormInput
+            label="Email"
+            type="email"
+            placeholder="enter email"
+            name="email"
+          ></FormInput>
 
           <FormInput
             label="Password"
@@ -45,15 +62,9 @@ const Login = () => {
             name="password"
           ></FormInput>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`py-2 mt-4 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 ${
-              isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
-            {isSubmitting ? "login..." : "login"}
-          </button>
+          <Button type="submit" disabled={loading} className="w-full">
+            {loading ? "login..." : "login"}
+          </Button>
         </form>
       </FormProvider>
     </div>
